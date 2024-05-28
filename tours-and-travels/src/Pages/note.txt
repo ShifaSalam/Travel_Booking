@@ -1,0 +1,11 @@
+   //   const fetchData=async()=>{
+    //     try{
+    //         const response=await allUserTours
+    //         const selectedTour=response.find(tour=>tours._id.toString()===_id)
+    //         setTours(selectedTour)
+
+    //     }
+    //     catch(error){
+    //         console.log(error)
+    //     }
+    // }
