@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { Container, Row, Col, Form, FormGroup, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -27,11 +26,12 @@ function AdminLogin() {
 
     return (
         <>
-            <Container>
+        <section style={{backgroundImage:"url(https://t3.ftcdn.net/jpg/03/55/60/70/360_F_355607062_zYMS8jaz4SfoykpWz5oViRVKL32IabTP.jpg)", height:"100vh" }}>
+        <Container style={{paddingTop:"130px"}}>
                 <Row>
                     <Col lg='8' className='m-auto'>
-                        <div className='w-75 d-flex justify-content-between shadow m-5'>
-                            <div className=' ms-5'>
+                        <div className='w-75 d-flex justify-content-between shadow-lg m-5'>
+                            <div className='d-flex align-items-center ms-5 ps-4'>
                                 <img src="https://icon-library.com/images/admin-user-icon/admin-user-icon-7.jpg" height={"200px"} alt="" />
                             </div>
 
@@ -41,12 +41,6 @@ function AdminLogin() {
                                     <h2>Login</h2>
                                 </div>
                                 <Form >
-                                    {/* <FormGroup>
-                                        <input className='border-0 my-2 rounded-1 w-100 p-1' type="email" placeholder='Email' required id='email' onChange={handleMail} name='mail' />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <input className='border-0 rounded-1 mb-2 w-100 p-1' type="password" placeholder='Password' required id='password' onChange={handlepswd} name='pswd' />
-                                    </FormGroup> */}
                                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                                         <Form.Label>Email address</Form.Label>
                                         <Form.Control type="email" name='mail' onChange={handleMail} placeholder="Enter your Email" />
@@ -63,6 +57,8 @@ function AdminLogin() {
                     </Col>
                 </Row>
             </Container>
+        </section>
+            
         </>
     )
 }

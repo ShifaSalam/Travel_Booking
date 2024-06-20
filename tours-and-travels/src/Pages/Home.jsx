@@ -115,24 +115,7 @@ function Home() {
             </Col>
           </Row>
           <Row style={{ marginLeft: "165px", marginBottom: "100px", marginTop: "-130px" }}>
-            {/* <Col sm={12} md={4}>
-                <div className='shadow bg-white rounded-4 p-2'>
-                    <Form className='d-flex align-items-center gap-5'>
-                        <FormGroup className='d-flex gap-3 form__group form__group-fast'>
-                            <span>
-                            <i class="fa-solid fa-location-dot" style={{color:"#74C0FC"}}></i>
-                            </span>
-                            <div>
-                                <h6><b>Location</b></h6>
-                                <input type='text' className='border-0' placeholder='Where do you wanna go?'  onChange={(e)=>{setSearch(e.target.value)}}/>
-                            </div>
-                        </FormGroup>
-                        <span className='bg-info rounded-1 d-flex justify-content-center align-items-center ms-auto' style={{height:"30px",width:"30px"}} type='submit'>
-                        <i class="fa-solid fa-magnifying-glass" style={{color:"#ffffff"}}></i>
-                        </span>
-                    </Form>
-                </div>
-            </Col> */}
+
           </Row>
         </Container>
       </section>
@@ -189,6 +172,8 @@ function Home() {
                 </div>
                 :
                 <div className='m-5'>
+                  <img src="" alt="" />
+                  <h2 className='text-center mb-5'>You can access our Tour packages Now!</h2>
                   <marquee behavior="" direction=''>
                   <div className='d-flex'>
                     {

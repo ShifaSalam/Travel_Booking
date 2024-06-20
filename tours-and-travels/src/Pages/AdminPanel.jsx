@@ -7,9 +7,11 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { toast } from 'react-toastify';
 import AdminEdit from '../Components/AdminEdit';
+import BookedInfo from '../Components/BookedInfo';
 import { addTours, allTours, deleteTour } from '../Services/allApis';
 import { addTourResponseContext } from '../Context Api/Contextapi';
 import { editTourResponseContext } from '../Context Api/Contextapi';
+import Users from '../Components/Users';
 
 function AdminPanel() {
     const { addTourResponse, setAddTourResponse } = useContext(addTourResponseContext)
@@ -18,6 +20,8 @@ function AdminPanel() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [search, setSearch] = useState("")
+
 
     const [preview, setPreview] = useState("")
     const [tourData, setTourData] = useState({
@@ -39,7 +43,7 @@ function AdminPanel() {
             setImageStatus(true)
             setPreview("")
         }
-    }, [tourData.image])
+    }, [tourData.image, search])
 
     const handleAddTour = async () => {
         const { packageName, state, description, rate, maxGroupSize, image } = tourData
@@ -78,7 +82,7 @@ function AdminPanel() {
     }, [addTourResponse, editTourResponse])
 
     const getAllTours = async () => {
-        const result = await allTours()
+        const result = await allTours(search)
         // console.log(result)
         if (result.status == 200) {
             setTours(result.data)
@@ -87,7 +91,7 @@ function AdminPanel() {
             console.log(result.response.data)
         }
     }
-    console.log(tours)
+    // console.log(tours)
 
     const handleDeleteTour = async (id) => {
         const header = {
@@ -107,13 +111,13 @@ function AdminPanel() {
 
     return (
         <>
-            <Row className='m-5'>
-                <Col>
+            <div className='m-5'>
+                <div>
                     <div className='m-5'>
                         <h4>Hello, <span>Admin</span></h4>
                         <h5 className=''><b>You can add and update Tour Packages here..</b></h5>
                     </div>
-                    <div className='ms-5 d-flex'>
+                    <div className='ms-5 d-flex justify-content-center'>
                         <img src="http://www.uluru.com/design/package_tour.png" style={{ height: "100px" }} alt="" />
                         <div className='btn p-3' style={{ marginTop: "25px" }} onClick={handleShow}><i className="fa-solid fa-plus fa-xl "></i></div>
                     </div>
@@ -167,35 +171,48 @@ function AdminPanel() {
                         </Modal.Footer>
                     </Modal>
 
-                </Col>
-                <Col md='6'>
-                    <h3>All Tour Packages</h3>
-                    <div className='border border-3 p-3'>
+                    <div className='mt-5'>
+                        <h3 className='text-center'>All available Tour Packages</h3>
+                        <div className='border border-3 p-3 d-flex mb-5'>
+
+                            <Row>
+                                {
+                                    tours.length > 0 &&
+                                    tours.map(item => (
+                                        <Col md='6'>
+                                            <div className='d-flex justify-content-between border shadow mb-3 p-3 rounded w-100'>
+                                                <h4 className='ms-5 mt-2'>{item?.packageName}</h4>
+                                                <div>
+
+                                                    <AdminEdit tours={item} />
+                                                    <button className='btn mt-3' onClick={() => { handleDeleteTour(item?._id) }} >
+                                                        <i className="fa-solid fa-trash fa-2xl" />
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </Col>
+                                    ))
+
+                                }
+                            </Row>
 
 
-                        {
-                            tours.length > 0 &&
-                            tours.map(item => (
-                                <div className='d-flex justify-content-between border shadow mb-3 p-3 rounded'>
-                                    <h4 className='ms-5 mt-2'>{item?.packageName}</h4>
-                                    <div>
 
-                                        <AdminEdit tours={item} />
-                                        <button className='btn mt-3' onClick={() => { handleDeleteTour(item?._id) }} >
-                                            <i className="fa-solid fa-trash fa-2xl" />
-                                        </button>
-                                    </div>
-                                </div>
-                            ))
-
-                        }
-
-
+                        </div>
                     </div>
-                </Col>
+
+                    <hr />
+
+                    <BookedInfo />
+
+                    <hr />
+
+                    <Users />
+
+                </div>
 
 
-            </Row>
+            </div>
         </>
     )
 }

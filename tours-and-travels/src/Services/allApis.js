@@ -11,14 +11,16 @@ export const userLogin=async(data)=>{
     return await commonApi("POST",`${base_url}/login`,data,"")
 }
 
+// __TOURS__
+
 // add tours
 export const addTours=async(data,header)=>{
     return await commonApi("POST",`${base_url}/create-tour`,data,header)
 }
 
 // get all tour packages
-export const allTours=async()=>{
-    return await commonApi("GET",`${base_url}/all-tours`,"","")
+export const allTours=async(search)=>{
+    return await commonApi("GET",`${base_url}/all-tours?search=${search}`,"","")
 }
 
 // to edit tour packages
@@ -39,4 +41,55 @@ export const allUserTours=async(header,search)=>{
 // home-tours(limitted)
 export const homeTours=async(header)=>{
     return await commonApi("GET",`${base_url}/home-tours`,"",header)
+}
+
+// to get single tour
+export const SingleTour=async(tid,header)=>{
+    // console.log(tid,'single')
+    return await commonApi("GET",`${base_url}/single-tour/${tid}`,"",header)
+}
+
+// __REVIEWS__
+
+// to add reviews
+export const addReviews=async(tid,data,header)=>{
+    return await commonApi("POST",`${base_url}/add-review/${tid}`,data,header)
+}
+
+// to get single tour reviews
+export const getReview=async(tid,header)=>{
+    return await commonApi("GET",`${base_url}/single-tour/${tid}/reviews`,"",header)
+}
+
+// __PHOTOS__
+
+// Add Photos
+export const addPhoto=async(tid,data,header)=>{
+    return await commonApi("POST",`${base_url}/addphoto/${tid}`,data,header)
+}
+
+// Get Single tour photos
+// export const getPhoto=async(tid,header)=>{
+//     return await commonApi("GET",`${base_url}/singletour-photos/${tid}/reviews`,"",header)
+// }
+
+
+
+// __BOOKING__
+
+export const addBooking=async(data)=>{
+    return await commonApi("POST",`${base_url}/addbooking`,data,"")
+}
+
+export const getBooking=async()=>{
+    return await commonApi("GET",`${base_url}/all-booking`,"","")
+}
+
+export const cancelBooking=async(id)=>{
+    console.log(id,"Bokking")
+    return await commonApi("DELETE",`${base_url}/cancel-booking/${id}`,{},"")
+}
+
+export const getUsers=async()=>{
+    return await commonApi("GET",`${base_url}/allusers`,"","")
 }

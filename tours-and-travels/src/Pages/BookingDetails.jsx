@@ -1,7 +1,56 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import { Container, Row, Col, Form, ListGroup } from 'react-bootstrap'
 import Booking from '../Components/Booking'
+import { useParams } from 'react-router-dom'
+import { SingleTour,getReview } from '../Services/allApis'
+import base_url from '../Services/base_url'
 function BookingDetails() {
+    const [tours, setTours] = useState([])
+    const { tid } = useParams()
+    const user = sessionStorage.getItem("username")
+    const [reviews, setReviews] = useState({
+        username: user, reviewText: "", rating: ""
+    })
+    const [allReviews, setAllReviews] = useState({
+        username: user, reviewText: "", rating: ""
+    })
+    const [averageRating, setAverageRating] = useState(0);
+
+    useEffect(() => {
+        getData()
+
+    }, [])
+
+    console.log(tid)
+    const getData = async () => {
+        const header = { "Authorization": `Bearer ${sessionStorage.getItem('token')}` }
+        // console.log(header)
+        const result = await SingleTour(tid, header)
+        // console.log(result.data)
+        const review = await getReview(tid, header)
+        // console.log(result.data.reviews)
+        if (result.status == 200) {
+            setTours(result.data)
+            // setAllReviews(result.data.reviews)
+            setAverageRating()
+
+        }
+        else {
+            console.log(result.response.data)
+        }
+        if (review.status == 200) {
+            setAllReviews(review.data.rev)
+            setAverageRating(review.data.averageRating)
+        } else {
+            console.log(review.response.data)
+        }
+    }
+
+    console.log(allReviews)
+    console.log(reviews)
+    console.log(tours)
+    console.log(averageRating)
+
     return (
         <>
             <section>
@@ -14,16 +63,16 @@ function BookingDetails() {
                     }
                     {
                         !loading && !error && */}
-                    <Row>
-                        <Col md='7'>
-                            <div className="">
-                                <img src='http://www.weather-forecast.com/system/images/2222/original/Munnar.jpg?1312999628' className='w-100 rounded' alt="" />
+                    <div className='d-flex '>
+                        <div className='w-75 h-100'>
+                            <div className="h-100">
+                                <img src={tours.image && `${base_url}/uploads/${tours.image}`} className='w-100 rounded' alt="" height={"500px"} />
 
-                                <div className="border my-4 p-3">
-                                    <h4>Munnar</h4>
+                                <div className="border mt-4 p-3 h-100">
+                                    <h4>{tours.packageName}</h4>
                                     <div className='d-flex align-items-center gap-5'>
                                         <span className='tour__rating d-flex  align-items-center gap-1'>
-                                            <i class="fa-solid fa-star fa-2xs" style={{ color: '#ffc800' }}></i>4.2
+                                            <i class="fa-solid fa-star fa-2xs" style={{ color: '#ffc800' }}></i>{averageRating}
                                             {/* {totalRating === 0 ? (
                                                     "Not rated"
                                                 ) : (
@@ -36,22 +85,28 @@ function BookingDetails() {
                                             {/* {address} */}
                                         </span>
                                     </div>
-                                    <div className=" my-2 d-flex">
-                                        <span className='me-5'><i class="fa-solid fa-location-dot"></i> Kerala</span>
-                                        <span className='me-5'><i class="fa-solid fa-indian-rupee-sign fa-xs"></i> 500/per person</span>
+                                    <div className=" d-flex">
+                                        <span className='me-5'><i class="fa-solid fa-location-dot"></i> {tours.state}</span>
+                                        <span className='me-5'><i class="fa-solid fa-indian-rupee-sign fa-xs"></i> {tours.rate}/per person</span>
                                         {/* <span><i class="ri-map-pin-time-line" style={{ color: "var(--secondary-color)" }}></i> k/m</span> */}
-                                        <span><i class="fa-solid fa-people-group fa-xs"></i> 12 people</span>
+                                        <span><i class="fa-solid fa-people-group fa-xs"></i> Maximum of {tours.maxGroupSize} People</span>
                                     </div>
                                     <h5>Description</h5>
-                                    <p>Munnar is a town and hill station located in the Idukki district of the southwestern Indian state
-                                        of Kerala. Munnar is situated at around 1,600 metres (5,200 ft) above mean sea level,[4] in the
-                                        Western Ghats mountain range. Munnar is also called the "Kashmir of South India" and is a popular
-                                        honeymoon destination.</p>
+                                    <p>{tours.description}</p>
                                 </div>
 
-                                {/*WWWWWWWWWWWWWWWWWWWWW TOUR REVIEW START WWWWWWWWWWWWWWWWWWWWWWWWW*/}
-                                <div className="border p-3">
-                                    <h4>Reviews </h4>
+                                
+                            </div>
+                        </div>
+
+                        <div className='w-50 ms-5' >
+                            <Booking tour={tours} avgRating={averageRating} allReviews={allReviews}/>
+                        </div>
+                    </div>
+
+                        {/*WWWWWWWWWWWWWWWWWWWWW TOUR REVIEW START WWWWWWWWWWWWWWWWWWWWWWWWW*/}
+                        <div className="border mt-5 p-3 m-auto w-50">
+                                    <h4>Reviews ({allReviews?.length}) </h4>
 
                                     <Form >
                                         <div className='d-flex align-items-center gap-3 mb-3 rating__group'>
@@ -72,17 +127,13 @@ function BookingDetails() {
                                             </span>
                                         </div>
 
-                                        <div className="border rounded w-50  d-flex justify-content-between mb-4">
-                                            <input className='border-0 w-100 p-2' type="text" placeholder='share your thoughts' />
-                                            <button className="btn btn-warning" type='submit'>
-                                                Submit
-                                            </button>
-                                        </div>
                                     </Form>
 
-                                    <ListGroup className=''>
-
-                                        <div className="my-4 border rounded-4">
+                                    <ListGroup>
+                                        {
+                                            allReviews.length>0?
+                                            allReviews.map(item=>(
+                                                <div className="my-4 border rounded-4">
                                             <div className='w-100'>
                                                 <div className='d-flex align-items-center justify-content-between pe-3'>
                                                     <div className='d-flex justify-content-around w-25'>
@@ -90,45 +141,26 @@ function BookingDetails() {
                                                             <i class="fa-regular fa-user"></i>
                                                         </div>
                                                         <div>
-                                                            <h5 style={{marginBottom:'-3px'}}>Shifa</h5>
-                                                            <p> {new Date('01-18-2023').toLocaleDateString("india")}</p>
+                                                            <h5 className=''>{item.username}</h5>
+                                                            <p> {new Date(item.createdAt).toLocaleDateString('en-IN', {
+                                                                    month: 'long',
+                                                                    day: 'numeric',
+                                                                    year: 'numeric'
+                                                                })}</p>
                                                         </div>
                                                     </div>
                                                     <span style={{marginTop:'-13px'}}>
-                                                        5 <i class="fa-solid fa-star fa-2xs" style={{ color: '#ffc800' }}></i>
+                                                        {item.rating} <i class="fa-solid fa-star fa-2xs" style={{ color: '#ffc800' }}></i>
                                                     </span>
                                                 </div>
-                                                <h6 style={{marginLeft:'80px'}}>Amazing tour</h6>
+                                                <h5 className='' style={{marginLeft:'80px'}}>{item.reviewText}</h5>
                                             </div>
                                         </div>
-                                        <div className="my-4 border rounded-4">
-                                            <div className='w-100'>
-                                                <div className='d-flex align-items-center justify-content-between pe-3'>
-                                                    <div className='d-flex justify-content-around w-25'>
-                                                        <div>
-                                                            <i class="fa-regular fa-user"></i>
-                                                        </div>
-                                                        <div>
-                                                            <h5 style={{marginBottom:'-3px'}}>Shifa</h5>
-                                                            <p> {new Date('01-18-2023').toLocaleDateString("india")}</p>
-                                                        </div>
-                                                    </div>
-                                                    <span style={{marginTop:'-13px'}}>
-                                                        5 <i class="fa-solid fa-star fa-2xs" style={{ color: '#ffc800' }}></i>
-                                                    </span>
-                                                </div>
-                                                <h6 style={{marginLeft:'80px'}}>Amazing tour</h6>
-                                            </div>
-                                        </div>
+                                            )):
+                                            <h3>Reviews has'nt been added yet</h3>
+                                        }
                                     </ListGroup>
                                 </div>
-                            </div>
-                        </Col>
-
-                        <Col md='5'>
-                            <Booking/>
-                        </Col>
-                    </Row>
 
                 </Container>
             </section>

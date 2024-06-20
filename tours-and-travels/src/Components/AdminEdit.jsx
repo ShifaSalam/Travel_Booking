@@ -14,7 +14,7 @@ function AdminEdit({ tours }) {
     const {editTourResponse,setEditTourResponse}=useContext(editTourResponseContext)
 
 
-    console.log(tours)
+    // console.log(tours)
     const [preview, setPreview] = useState("")
     const [show, setShow] = useState(false);
 

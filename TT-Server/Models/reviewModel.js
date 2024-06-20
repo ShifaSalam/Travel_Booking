@@ -21,6 +21,10 @@ const reviewSchema = new mongoose.Schema(
         max: 5,
         default: 0,
       },
+      date:{
+        type:Date,
+        default:Date.now
+      }
     },
     { timestamps: true }
   )

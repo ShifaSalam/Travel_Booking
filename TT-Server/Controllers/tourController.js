@@ -23,12 +23,36 @@ exports.createTour = async (req, res) => {
 
 exports.allTours = async (req, res) => {
     const search=req.query.search
-    console.log(search)
+    const { tid } = req.params
+
+    // console.log(search)
     try {
         const query={
             state:{$regex:search,$options:'i'}
         }
         const result = await tours.find(query).populate('reviews')
+
+        if (result) {
+            res.status(200).json(result)
+        }
+        else {
+            res.status(401).json("No Projects Available !")
+        }
+    }
+    catch (err) {
+        console.log("error",err)
+        res.status(406).json(err)
+    }
+}
+
+
+//specific tour
+exports.specificTours = async (req, res) => {
+    const { tid } = req.params
+
+    try {
+       
+        const result = await tours.findById({_id:tid})
         if (result) {
             res.status(200).json(result)
         }
@@ -92,3 +116,74 @@ exports.removeTours = async (req, res) => {
         res.status(404).json(err)
     }
 }
+
+
+// For Adding Photos
+exports.addPhoto=async(req,res)=>{
+    // const userId=req.payload
+    // const userId = req.payload
+    const { tid } = req.params
+    // console.log(tid)
+    const {photo}=req.body
+    // const photoPath=req.file.path
+    // const photos=req.file?req.file.filename:photo
+    const photos= req.files.map(file => file.path)
+    try{
+        const newPhoto=await tours.findByIdAndUpdate({ _id: tid },{$push:{photo:{$each:photos}}},{new:true})
+        await newPhoto.save()
+        res.status(200).json(newPhoto)
+        console.log(newPhoto)
+    }
+    catch(err){
+        console.log(err)
+        res.status(406).json(err)
+    }
+}
+
+// to get added photos of each tours
+// exports.singlePhotos = async (req, res) => {
+//     const { tid } = req.params
+
+//     try {
+       
+//         const result = await tours.findById({_id:tid})
+//         // console.log(result)
+//         console.log(tid)
+//         if (result) {
+//             // to calculate the average review
+//             const photos = result.photo
+//             console.log(photos)
+//             res.status(200).json(photos)
+//         }
+//         else {
+//             res.status(401).json("No Projects Available !")
+//         }
+//     }
+//     catch (err) {
+//         console.log(err)
+//         res.status(406).json(err)
+//     }
+// }
+
+
+// all photos
+exports.allPhotos = async (req, res) => {
+    const { tid } = req.params
+    const {photo,packageName}=req.body
+    try {
+
+        const result = await tours.find()
+
+        if (result) {
+            res.status(200).json(result)
+        }
+        else {
+            res.status(401).json("No Projects Available !")
+        }
+    }
+    catch (err) {
+        console.log("error",err)
+        res.status(406).json(err)
+    }
+}
+

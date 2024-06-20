@@ -15,24 +15,24 @@ function Footer() {
 
                 <div className="d-flex align-items-center gap-4">
                   <span>
-                    <Link to='#'>
+                    <a href='https://www.youtube.com/' target='_blank'>
                       <i class="fa-brands fa-youtube" style={{ color: "#000000" }}></i>
-                    </Link>
+                    </a>
                   </span>
                   <span>
-                    <Link to='#'>
+                    <a href='https://github.com' target='_blank'>
                       <i class="fa-brands fa-github" style={{ color: "#000000" }}></i>
-                    </Link>
+                    </a>
                   </span>
                   <span>
-                    <Link to='#'>
+                    <a href='https://www.facebook.com/' target='_blank'>
                       <i class="fa-brands fa-square-facebook" style={{ color: "#000000" }}></i>
-                    </Link>
+                    </a>
                   </span>
                   <span>
-                    <Link to='#'>
+                    <a href='https://www.instagram.com/' target='_blank'>
                       <i class="fa-brands fa-instagram" style={{ color: "#000000" }}></i>
-                    </Link>
+                    </a>
                   </span>
                 </div>
               </div>
@@ -41,16 +41,16 @@ function Footer() {
             <Col lg='3' className='p-5'>
               <h5>Discover</h5>
               <ListGroup className=''>
-                <Link className='text-decoration-none text-dark py-3'>Home</Link>
+                <Link className='text-decoration-none text-dark py-3' to={'/'}>Home</Link>
                 <Link className='text-decoration-none text-dark'>About</Link>
-                <Link className='text-decoration-none text-dark py-3'>Tour</Link>
+                <Link className='text-decoration-none text-dark py-3' to={'/tours'}>Tours</Link>
               </ListGroup>
             </Col>
 
             <Col lg='3' className='p-5'>
               <h5>Quick Links</h5>
               <ListGroup className=''>
-                <Link className='text-decoration-none text-dark py-3'>Gallery</Link>
+                <Link className='text-decoration-none text-dark py-3' to={'/gal'}>Gallery</Link>
                 <Link className='text-decoration-none text-dark' to={'/login'}>Login</Link>
                 <Link className='text-decoration-none text-dark pt-3' to={'/reg'}>Register</Link>
                 <Link className='text-decoration-none text-dark py-3'  to={'/adminlogin'}>Admin Panel</Link>

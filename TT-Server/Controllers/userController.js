@@ -47,3 +47,25 @@ exports.userLogin= async(req,res)=>{
         res.status(401).json(err)
     } 
 }
+
+exports.allUsers = async (req, res) => {
+
+    try {
+
+        const result = await users.find()
+
+        if (result) {
+            res.status(200).json(result)
+        }
+        else {
+            res.status(401).json("Something went wrong!")
+        }
+    }
+    catch (err) {
+        console.log("error",err)
+        res.status(406).json(err)
+    }
+}
+
+
+

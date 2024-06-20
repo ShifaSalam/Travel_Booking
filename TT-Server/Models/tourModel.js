@@ -27,7 +27,9 @@ const tourSchema = new mongoose.Schema(
         type: Number,
         required: true,
       },
-  
+      photo:{
+        type:[String]
+      },
       reviews: [
         {
           type: mongoose.Types.ObjectId,

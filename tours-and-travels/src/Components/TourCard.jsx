@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Card, CardBody } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import base_url from '../Services/base_url';
 
 function TourCard({ tours }) {
-    // console.log(id)
+
     return (
         <>
             <div className='d-flex justify-content-between '>
@@ -16,22 +16,21 @@ function TourCard({ tours }) {
                         <div className=' d-flex align-items-center justify-content-between'>
                             <span className=' d-flex  align-items-center'>
                                 <i class="fa-solid fa-location-dot"></i>
-                                {tours.state}
+                                 {tours.state}
                             </span>
-                            <span className='tour__rating d-flex  align-items-center gap-1'>
-                                <i class="fa-solid fa-star"></i>
-                                4.5
+                            <span>
+                                <i class="fa-solid fa-users-line fa-lg"></i> {tours.maxGroupSize} People
                             </span>
                         </div>
 
-                        <h5 className='text-center'>
-                            <Link >
+                        <h5 className='text-center mt-1'>
+                            <Link to={`/tourdet/${tours._id}`} className='text-decoration-none text-info'>
                                 {tours.packageName}
                             </Link>
                         </h5>
                         <div className='text-center'>
                             <button className='btn'>
-                                <Link to={'/bookingdet'}>Book Now</Link>
+                                <Link to={`/bookingdet/${tours._id}`} className='text-info'>Book Now</Link>
                             </button>
                         </div>
                     </CardBody>

@@ -11,9 +11,11 @@ function Tours() {
 
   const [tours, setTours] = useState([])
   const [search, setSearch] = useState("")
+  const [user, setUser] = useState("")
 
 
   useEffect(() => {
+    setUser(sessionStorage.getItem("username"))
     if (sessionStorage.getItem('token')) {
       getData()
       // setLogStatus(true)
@@ -42,25 +44,27 @@ function Tours() {
   return (
     <>
       <Header />
+      <h2 className='text-center mt-3'>Welcom To Travel India, <span>{user}</span></h2>
+      <h3 className='text-center'>Enjoy Your Journey!</h3>
 
-      <div className='shadow bg-white rounded-4 p-2 m-5 w-25'>
-        <div className='d-flex'>
+      <div className='shadow bg-white rounded-4 p-2 m-5 w-25 m-auto my-5'>
+        <div className='d-flex ms-3'>
           <span className='px-2'>
             <i class="fa-solid fa-location-dot " style={{ color: "#74C0FC" }}></i>
-          </span> <h5><b> Location</b></h5>
+          </span>
+          <h5><b> Location</b></h5>
         </div>
-        <Form className='d-flex align-items-center'>
-          <FormGroup className='d-flex gap-3 '>
-
-            <div className='w-100'>
-              <FloatingLabel controlId="floatingInput" label="Where do You wanna Go? " className="mb-2">
-                <Form.Control type="text" placeholder="Where do You wanna Go?" onChange={(e) => { setSearch(e.target.value) }} className='px-3' />
+        <Form className='d-flex ms-3'>
+          <FormGroup className=''>
+            <div className='w-100 d-flex justify-content-center'>
+              <FloatingLabel controlId="floatingInput" label="Where do You wanna Go? " className="">
+                <Form.Control type="text" placeholder="Where do You wanna Go?" onChange={(e) => { setSearch(e.target.value) }} className='px-5' />
               </FloatingLabel>
+              <span className='bg-info rounded-1 d-flex justify-content-center align-items-center ms-auto p-4' type='submit'>
+                <i class="fa-solid fa-magnifying-glass fa-xl" style={{ color: "#ffffff" }}></i>
+              </span>
             </div>
           </FormGroup>
-          <span className='bg-info rounded-1 d-flex justify-content-center align-items-center ms-auto' type='submit' style={{ height: "90px", width: "90px", marginRight: "35px", marginTop: "-30px" }} >
-            <i class="fa-solid fa-magnifying-glass fa-2xl" style={{ color: "#ffffff" }}></i>
-          </span>
         </Form>
       </div>
       {/* <SearchBar /> */}
@@ -73,7 +77,7 @@ function Tours() {
                   <TourCard tours={item} />
                 </Col>
               )) :
-              <h1>Loading...</h1>
+              <h1>No packages Available..</h1>
           }
 
         </Row>

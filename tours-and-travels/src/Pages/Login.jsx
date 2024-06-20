@@ -38,10 +38,11 @@ function Login() {
     }
     return (
         <>
+            <section style={{backgroundImage:"url(https://t3.ftcdn.net/jpg/03/55/60/70/360_F_355607062_zYMS8jaz4SfoykpWz5oViRVKL32IabTP.jpg)", height:"100vh" }}>
             <Container>
-                <Row>
-                    <Col lg='8' className='m-auto'>
-                        <div className='d-flex justify-content-between shadow m-5'>
+                <Row className='d-flex justify-content-center'>
+                    <div className='w-75 d-flex justify-content-center' style={{marginTop:"140px"}}>
+                        <div className='d-flex justify-content-between shadow m-5' >
                             <div className='pe-5 mx-5'>
                                 <img src="https://cdni.iconscout.com/illustration/premium/thumb/login-3305943-2757111.png" height={"300px"} alt="" />
                             </div>
@@ -53,15 +54,7 @@ function Login() {
                                 </div>
                                 
 
-                                {/* <Form >
-                                    <FormGroup>
-                                        <input className='border-0 my-2 rounded-1 w-100 p-1' type="email" placeholder='Email' required id='email'  />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <input className='border-0 rounded-1 mb-2 w-100 p-1' type="password" placeholder='Password' required id='password' />
-                                    </FormGroup>
-                                    <Button type='submit' className='btn w-100 mb-2' >Login</Button>
-                                </Form> */}
+
 
                                 <div>
                                 <FloatingLabel  controlId="floatingInput" label="Email Address" className="mb-2">
@@ -78,9 +71,10 @@ function Login() {
                                 <p>Don't have an account?<Link to='/reg' className='text-decoration-none ms-1'>Sign Up</Link></p>
                             </div>
                         </div>
-                    </Col>
+                    </div>
                 </Row>
             </Container>
+            </section>
         </>
     )
 }

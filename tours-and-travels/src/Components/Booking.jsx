@@ -1,32 +1,77 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Form, FormGroup, ListGroupItem, Button, ListGroup, FloatingLabel } from 'react-bootstrap'
+import { addBooking } from '../Services/allApis'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
-function Booking() {
+function Booking({tour,avgRating,allReviews}) {
+    const {state,rate}=tour
+
+    const navigate=useNavigate()
+    const [booking, setBooking] = useState({
+        packageName: "", email: "", fullName: "", phone: "", guestSize: "", bookAt: ""
+    })
+    const { guestSize } = booking
+
+    const handleBooking = async () => {
+        console.log('Payload being sent:', booking);
+        const { packageName, email, fullName, phone, guestSize, bookAt } = booking
+        if (!packageName || !email || !fullName || !phone || !guestSize || !bookAt) {
+            toast.warning("Provide Complete Data!!")
+        }
+        else {
+            const result = await addBooking(booking)
+            console.log(result)
+
+            if (result.status == 200) {
+                toast.success("Successfully Booked a Trip to")
+                setBooking({
+                    packageName: "", email: "", fullName: "", phone: "", guestSize: "", bookAt: ""
+                })
+                navigate('/thank')
+
+            }
+            else {
+                toast.error(result.response.data)
+                console.log(packageName, email, fullName, phone, guestSize, bookAt)
+            }
+
+        }
+    }
+    // console.log(allReviews)
     return (
         <>
-            <div className='border p-5'>
+            <div className='border p-5 h-100'>
+                <h3>Let's go for a Trip to </h3>
+                <h3 style={{marginLeft:"190px"}} className='text-info'>{state}</h3>
                 <div className="booking__top d-flex align-items-center justify-content-between">
-                    <h4><i class="fa-solid fa-indian-rupee-sign fa-xs"></i> 500 <span><small>/per person</small></span></h4>
+                    <h4><i class="fa-solid fa-indian-rupee-sign fa-xs"></i> {rate} <span><small>/per person</small></span></h4>
                     <span className='tour__rating d-flex  align-items-center gap-1'>
-                        <i class="fa-solid fa-star fa-2xs" style={{ color: '#ffc800' }}></i><small> 4.2(3) </small>
+                        <i class="fa-solid fa-star fa-2xs" style={{ color: '#ffc800' }}></i><small>{avgRating} ({allReviews.length}) </small>
                     </span>
                 </div>
 
                 <div className="py-4">
                     <h5><b>Informations</b></h5>
                     <Form className='' >
+                        <FloatingLabel controlId="floatingInput" label="Package Name" className="mb-2">
+                            <Form.Control type="text" required placeholder="Package Name" onChange={(e) => { setBooking({ ...booking, packageName: e.target.value }) }} />
+                        </FloatingLabel>
                         <FloatingLabel controlId="floatingInput" label="Full Name" className="mb-2">
-                            <Form.Control type="text" required placeholder="Full Name" onChange={(e) => { setData({ ...data, email: e.target.value }) }} />
+                            <Form.Control type="text" required placeholder="Full Name" onChange={(e) => { setBooking({ ...booking, fullName: e.target.value }) }} />
+                        </FloatingLabel>
+                        <FloatingLabel controlId="floatingInput" label="Email Address" className="mb-2">
+                            <Form.Control type="email" required placeholder="Email Address" onChange={(e) => { setBooking({ ...booking, email: e.target.value }) }} />
                         </FloatingLabel>
                         <FloatingLabel controlId="floatingInput" label="Phone Number" className="mb-2">
-                            <Form.Control type="text" required placeholder="Phone Number" onChange={(e) => { setData({ ...data, password: e.target.value }) }} />
+                            <Form.Control type="text" required placeholder="Phone Number" onChange={(e) => { setBooking({ ...booking, phone: e.target.value }) }} />
                         </FloatingLabel>
                         <div className='d-flex w-100'>
                             <FloatingLabel controlId="floatingInput" label="Date" className="mb-2 w-50">
-                                <Form.Control type="date" required placeholder="" onChange={(e) => { setData({ ...data, password: e.target.value }) }} />
+                                <Form.Control type="date" required placeholder="" onChange={(e) => { setBooking({ ...booking, bookAt: e.target.value }) }} />
                             </FloatingLabel>
                             <FloatingLabel controlId="floatingInput" label="Guest" className="mb-2 w-50">
-                                <Form.Control type="number" required placeholder="Guest" onChange={(e) => { setData({ ...data, password: e.target.value }) }} />
+                                <Form.Control type="number" required placeholder="Guest" onChange={(e) => { setBooking({ ...booking, guestSize: e.target.value }) }} />
                             </FloatingLabel>
                         </div>
                     </Form>
@@ -35,9 +80,9 @@ function Booking() {
                     <ListGroup>
                         <ListGroupItem className='border-0 d-flex justify-content-between'>
                             <h6 className='d-flex align-items-center gap-1'>
-                                <i class="fa-solid fa-indian-rupee-sign fa-xs"></i>500 X 1 person
+                                <i class="fa-solid fa-indian-rupee-sign fa-xs"></i>{rate} X {guestSize} person
                             </h6>
-                            <h6> <i class="fa-solid fa-indian-rupee-sign fa-xs"></i>500</h6>
+                            <h6> <i class="fa-solid fa-indian-rupee-sign fa-xs"></i>{rate*guestSize}</h6>
                         </ListGroupItem>
                         <ListGroupItem className='border-0 d-flex justify-content-between'>
                             <h6>
@@ -47,11 +92,11 @@ function Booking() {
                         </ListGroupItem>
                         <ListGroupItem className='border-0 total d-flex justify-content-between'>
                             <h6><b>Total</b></h6>
-                            <h6><b><i class="fa-solid fa-indian-rupee-sign fa-xs"></i>600</b></h6>
+                            <h6><b><i class="fa-solid fa-indian-rupee-sign fa-xs"></i>{150+(rate*guestSize)}</b></h6>
                         </ListGroupItem>
                     </ListGroup>
 
-                    <Button className='btn btn-warning w-100 mt-4' >
+                    <Button className='btn btn-info w-100 mt-4' onClick={handleBooking}>
                         Book Now
                     </Button>
                 </div>
