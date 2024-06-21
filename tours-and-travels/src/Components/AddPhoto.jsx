@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { Row, Col } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import { addPhoto } from '../Services/allApis';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 
 
-function AddPhoto() {
+function AddPhoto({setAddStatus}) {
     const { tid } = useParams()
-
 
     const [show, setShow] = useState(false);
 
@@ -17,11 +16,9 @@ function AddPhoto() {
     const handleShow = () => setShow(true);
 
     const [preview, setPreview] = useState("")
-
     const [photoDet, setPhotoDet] = useState({ photo: "" })
 
     useEffect(() => {
-        console.log(photoDet)
         if (photoDet.photo.type == "image/jpg" || photoDet.photo.type == "image/jpeg" || photoDet.photo.type == "image/png") {
             console.log("Image has correct format")
             setPreview(URL.createObjectURL(photoDet.photo))
@@ -32,19 +29,15 @@ function AddPhoto() {
         }
     }, [photoDet.photo])
 
-
     const handleUpload = async () => {
         const { photo } = photoDet
-
         const formData = new FormData()
-
         formData.append("photo", photo)
-
         const reqHeader = { "Content-Type": "multipart/form-data" }
-
         const result = await addPhoto(tid, formData, reqHeader)
         if (result.status == 200) {
             toast.success("Photo uploaded successfully")
+            setAddStatus(result)
             setPhotoDet({ photo: "" })
             handleClose()
         } else {
@@ -56,7 +49,7 @@ function AddPhoto() {
         <>
             <div className='d-flex justify-content-between' style={{ marginLeft: "500px"}} onClick={handleShow}>
                 <h6 style={{marginTop:"-10px"}}>Upload your memmories here..</h6>
-                <i class="fa-solid fa-camera-retro fa-2xl"></i>
+                <i className="fa-solid fa-camera-retro fa-2xl"></i>
             </div>
 
             <Modal

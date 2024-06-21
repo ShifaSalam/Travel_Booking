@@ -7,36 +7,29 @@ import base_url from '../Services/base_url';
 
 function TourImages({ photo, tour }) {
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedTour, setSelectedTour] = useState([]);
+    const [showModal, setShowModal] = useState(false)
+    const [selectedTour, setSelectedTour] = useState([])
 
-    // console.log(photo)
-    console.log(tour)
-    const photoUrl = `${base_url}/${photo}`
-
-    const handlePhotoClick = (photoUrl) => {
+    const handlePhotoClick = () => {
         const tourDetails = tour.find(tours => tours.photo.includes(photo));
         console.log(tourDetails)
         setSelectedTour(tourDetails);
-        setIsModalOpen(true);
-        console.log(selectedTour)
+        setShowModal(true);
 
-
-    };
+    }
 
     const closeModal = () => {
-        setIsModalOpen(false);
-    };
-
+        setShowModal(false);
+    }
 
     return (
         <>
-            <div className='py-2' style={{cursor:'pointer'}} >
-                <img src={photo && `${base_url}/${photo}`} width={'100%'} alt="tour-img" height={'300px'} className='rounded-1 gallery' onClick={() => handlePhotoClick(photoUrl)} />
+            <div className='py-2' style={{ cursor: 'pointer' }} >
+                <img src={photo && `${base_url}/${photo}`} width={'100%'} alt="tour-img" height={'300px'} className='rounded-1 gallery' onClick={() => handlePhotoClick()} />
             </div>
             <div>
                 <Modal
-                    show={isModalOpen}
+                    show={showModal}
                     onHide={closeModal}
                     backdrop="static"
                     keyboard={false}
@@ -47,16 +40,11 @@ function TourImages({ photo, tour }) {
                     <Modal.Body>
                         <Row>
                             <img src={photo && `${base_url}/${photo}`} width={'100%'} alt="tour-img" height={'300px'} />
-                            <Col md='8'>
-                                <h3>{selectedTour.state}</h3>
-                            </Col>
-                            <Col className='mt-2'>
-                                <i class="fa-solid fa-users-line fa-lg"></i> {selectedTour.maxGroupSize} People
-                            </Col>
+                            <h3 className='text-center mt-1'>{selectedTour.state}</h3>
                         </Row>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="info" onClick={closeModal}>
+                        <Button variant="info" className='m-auto' onClick={closeModal}>
                             Close
                         </Button>
                     </Modal.Footer>

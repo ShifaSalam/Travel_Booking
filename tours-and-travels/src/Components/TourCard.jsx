@@ -15,11 +15,11 @@ function TourCard({ tours }) {
                     <CardBody>
                         <div className=' d-flex align-items-center justify-content-between'>
                             <span className=' d-flex  align-items-center'>
-                                <i class="fa-solid fa-location-dot"></i>
+                                <i className="fa-solid fa-location-dot"></i>
                                  {tours.state}
                             </span>
                             <span>
-                                <i class="fa-solid fa-users-line fa-lg"></i> {tours.maxGroupSize} People
+                                <i className="fa-solid fa-users-line fa-lg"></i> {tours.maxGroupSize} People
                             </span>
                         </div>
 

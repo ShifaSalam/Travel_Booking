@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, FormGroup, ListGroupItem, Button, ListGroup, FloatingLabel } from 'react-bootstrap'
+import { Form,ListGroupItem, Button, ListGroup, FloatingLabel } from 'react-bootstrap'
 import { addBooking } from '../Services/allApis'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
@@ -12,19 +12,16 @@ function Booking({tour,avgRating,allReviews}) {
         packageName: "", email: "", fullName: "", phone: "", guestSize: "", bookAt: ""
     })
     const { guestSize } = booking
-
     const handleBooking = async () => {
-        console.log('Payload being sent:', booking);
         const { packageName, email, fullName, phone, guestSize, bookAt } = booking
         if (!packageName || !email || !fullName || !phone || !guestSize || !bookAt) {
             toast.warning("Provide Complete Data!!")
         }
         else {
             const result = await addBooking(booking)
-            console.log(result)
 
             if (result.status == 200) {
-                toast.success("Successfully Booked a Trip to")
+                toast.success(`Successfully Booked a Trip to${booking.packageName}`)
                 setBooking({
                     packageName: "", email: "", fullName: "", phone: "", guestSize: "", bookAt: ""
                 })
@@ -33,21 +30,19 @@ function Booking({tour,avgRating,allReviews}) {
             }
             else {
                 toast.error(result.response.data)
-                console.log(packageName, email, fullName, phone, guestSize, bookAt)
             }
 
         }
     }
-    // console.log(allReviews)
     return (
         <>
             <div className='border p-5 h-100'>
                 <h3>Let's go for a Trip to </h3>
                 <h3 style={{marginLeft:"190px"}} className='text-info'>{state}</h3>
                 <div className="booking__top d-flex align-items-center justify-content-between">
-                    <h4><i class="fa-solid fa-indian-rupee-sign fa-xs"></i> {rate} <span><small>/per person</small></span></h4>
+                    <h4><i className="fa-solid fa-indian-rupee-sign fa-xs"></i> {rate} <span><small>/per person</small></span></h4>
                     <span className='tour__rating d-flex  align-items-center gap-1'>
-                        <i class="fa-solid fa-star fa-2xs" style={{ color: '#ffc800' }}></i><small>{avgRating} ({allReviews.length}) </small>
+                        <i className="fa-solid fa-star fa-2xs" style={{ color: '#ffc800' }}></i><small>{avgRating} ({allReviews.length}) </small>
                     </span>
                 </div>
 
@@ -76,23 +71,23 @@ function Booking({tour,avgRating,allReviews}) {
                         </div>
                     </Form>
                 </div>
-                <div className="booking__bottom">
+                <div>
                     <ListGroup>
                         <ListGroupItem className='border-0 d-flex justify-content-between'>
                             <h6 className='d-flex align-items-center gap-1'>
-                                <i class="fa-solid fa-indian-rupee-sign fa-xs"></i>{rate} X {guestSize} person
+                                <i className="fa-solid fa-indian-rupee-sign fa-xs"></i>{rate} X {guestSize} person
                             </h6>
-                            <h6> <i class="fa-solid fa-indian-rupee-sign fa-xs"></i>{rate*guestSize}</h6>
+                            <h6> <i className="fa-solid fa-indian-rupee-sign fa-xs"></i>{rate*guestSize}</h6>
                         </ListGroupItem>
                         <ListGroupItem className='border-0 d-flex justify-content-between'>
                             <h6>
                                 Service charge
                             </h6>
-                            <h6><i class="fa-solid fa-indian-rupee-sign fa-xs"></i>100</h6>
+                            <h6><i className="fa-solid fa-indian-rupee-sign fa-xs"></i>150</h6>
                         </ListGroupItem>
                         <ListGroupItem className='border-0 total d-flex justify-content-between'>
                             <h6><b>Total</b></h6>
-                            <h6><b><i class="fa-solid fa-indian-rupee-sign fa-xs"></i>{150+(rate*guestSize)}</b></h6>
+                            <h6><b><i className="fa-solid fa-indian-rupee-sign fa-xs"></i>{150+(rate*guestSize)}</b></h6>
                         </ListGroupItem>
                     </ListGroup>
 
@@ -100,7 +95,6 @@ function Booking({tour,avgRating,allReviews}) {
                         Book Now
                     </Button>
                 </div>
-
             </div>
         </>
     )

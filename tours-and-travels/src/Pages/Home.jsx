@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col, Form, FormGroup } from 'react-bootstrap'
-
-import SearchBar from '../Components/SearchBar'
+import { Container, Row, Col } from 'react-bootstrap'
 import TourImages from '../Components/TourImages'
 import Header from '../Components/Header'
 import { Link } from 'react-router-dom'
@@ -26,14 +24,10 @@ function Home() {
       setLogStatus(false)
     }
   }, [search])
-  console.log(tours)
 
   const getData = async () => {
     const header = { "Authorization": `Bearer ${sessionStorage.getItem('token')}` }
-    // console.log(header)
     const result = await allUserTours(header, search)
-    const limitted = result.data.slice(0, 5)
-    console.log(limitted)
     if (result.status == 200) {
       setTours(result.data)
       const allPhotos = result.data.flatMap(tour => tour.photo.slice(0, 1))
@@ -45,7 +39,6 @@ function Home() {
   }
   const getHomeTours = async () => {
     const result = await homeTours()
-    // console.log(result)
     if (result.status == 200) {
       setToursHome(result.data)
     }
@@ -53,13 +46,15 @@ function Home() {
       console.log(result.response.data)
     }
   }
-  console.log(toursHome)
-  console.log(photos)
+  // console.log(toursHome)
+  // console.log(photos)
 
   return (
     <>
-      <Header status={true} />
+      <Header />
+
       {/* FIRST SECTION */}
+
       <section style={{ marginTop: "70px" }}>
         <Container className='m-4'>
           <Row>
@@ -79,7 +74,6 @@ function Home() {
               <img src="https://www.visittnt.com/blog/wp-content/uploads/2018/11/North-India.jpg" className='rounded-3' style={{ width: "740px", height: "500px" }} alt="" />
             </Col>
           </Row>
-
         </Container>
       </section>
 
@@ -116,45 +110,14 @@ function Home() {
               </div>
             </Col>
             <Col lg='6'>
-              <div className="experience__img">
+              <div className="">
                 <img src="https://webstockreview.net/images/traveling-clipart-global-travel-4.png" height={"500px"} alt="" />
               </div>
             </Col>
           </Row>
-          <Row style={{ marginLeft: "165px", marginBottom: "100px", marginTop: "-130px" }}>
-
-          </Row>
         </Container>
       </section>
 
-      {/* THIRD SECTION */}
-
-      <section>
-        <Container>
-          <Row>
-            <Col lg='12'>
-              <h5 className='btn btn-info rounded-pill ms-5'>Gallery</h5>
-              <h2 className=''>Visit our customers tour gallery</h2>
-            </Col>
-          </Row>
-          <div className='d-flex'>
-            {
-              photos.length > 0 ?
-                photos.map(item => (
-                  <div className='w-100 p-2'>
-                    <TourImages photo={item} />
-                  </div>
-                )) :
-                <h5>no images</h5>
-            }
-            <div className='galleryButton'  style={{marginTop:'150px'}}>
-              <Link to={'/gal'} className=' ms-3'>
-                <i class="fa-solid fa-circle-chevron-right fa-2xl" style={{ color: '#9fcdf9' }}></i>
-              </Link>
-            </div>
-          </div>
-        </Container>
-      </section>
 
       {/* LAST SECTION */}
 
@@ -186,28 +149,62 @@ function Home() {
                 </Col>
               </div>
               :
-              <div className='m-5'>
-                <img src="" alt="" />
-                <h2 className='text-center mb-5'>You can access our Tour packages Now!</h2>
-                <marquee behavior="" direction=''>
-                  <div className='d-flex'>
-                    {
-                      toursHome.length > 0 &&
-                      toursHome.map(item => (
-                        <div>
-                          <div className='mx-4'>
-                            <TourCard tours={item} />
+
+              // THIRD SECTION
+
+              <div>
+                <section>
+                  <Container>
+                    <Row>
+                      <Col lg='12'>
+                        <h5 className='btn btn-info rounded-pill ms-5 px-3'>Gallery</h5>
+                        <h2 className='ms-3'>Visit our customers tour gallery</h2>
+                      </Col>
+                    </Row>
+                    <div className='d-flex'>
+                      {
+                        photos.length > 0 ?
+                          photos.map(item => (
+                            <div className='w-100 p-2'>
+                              <TourImages photo={item} />
+                            </div>
+                          )) :
+                          <h5>no images</h5>
+                      }
+                      <div className='galleryButton' style={{ marginTop: '150px' }}>
+                        <Link to={'/gal'} className=' ms-3'>
+                          <i className="fa-solid fa-circle-chevron-right fa-2xl" style={{ color: '#9fcdf9' }}></i>
+                        </Link>
+                      </div>
+                    </div>
+                  </Container>
+                </section>
+
+                {/* LAST SECTION */}
+
+                <div className='m-5'>
+                  <img src="" alt="" />
+                  <h2 className='text-center mb-5'>You can access our Tour packages Now!</h2>
+                  <marquee behavior="" direction=''>
+                    <div className='d-flex'>
+                      {
+                        toursHome.length > 0 &&
+                        toursHome.map(item => (
+                          <div>
+                            <div className='mx-4'>
+                              <TourCard tours={item} />
+                            </div>
                           </div>
-                        </div>
-                      ))
+                        ))
 
-                    }
+                      }
 
+                    </div>
+
+                  </marquee>
+                  <div className='text-center mt-4'>
+                    <Link to={'/tours'} className='text-decoration-none text-info'>Go for More Packages</Link>
                   </div>
-
-                </marquee>
-                <div className='text-center mt-4'>
-                  <Link to={'/tours'} className='text-decoration-none text-info'>Go for More Packages</Link>
                 </div>
               </div>
           }

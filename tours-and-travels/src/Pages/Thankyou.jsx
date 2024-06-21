@@ -11,25 +11,23 @@ function Thankyou() {
         <Container>
             <Row>
                 <Col className='pt-5 text-center' style={{margin:"100px"}}>
-                    <div className="thank__you">
+                    <div>
                         <span>
-                        <i class="fa-solid fa-circle-check fa-2xl" style={{color:"#74C0FC"}}></i>
+                        <i className="fa-solid fa-circle-check fa-2xl" style={{color:"#74C0FC"}}></i>
                         </span>
                         <h1 className="my-3 fw-semibold">
                             Thank You 
                         </h1>
-                        <h3 className="mb-4">
+                        <h3 className="mb-3">
                             Your Tour is Booked!
                         </h3>
                         <h3>
-                            Happy Journey <span><i class="fa-regular fa-face-smile-beam" style={{color:"#74C0FC"}}></i></span>
+                            Happy Journey <span><i className="fa-regular fa-face-smile-beam" style={{color:"#74C0FC"}}></i></span>
                         </h3>
 
-                        <Button className='btn btn-warning w-25'>
-                            <Link to='/' className='text-decoration-none text-light'>
+                            <Link to='/' className='text-decoration-none text-light btn btn-info mt-2 w-25'>
                                 Back to Home
                             </Link>
-                        </Button>
                     </div>
                 </Col>
             </Row>
