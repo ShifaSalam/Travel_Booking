@@ -12,6 +12,8 @@ function Home() {
   const [tours, setTours] = useState([])
   const [toursHome, setToursHome] = useState([])
   const [logStatus, setLogStatus] = useState(false)
+  const [search, setSearch] = useState("")
+  const [photos, setPhotos] = useState("")
 
   useEffect(() => {
     if (sessionStorage.getItem('token')) {
@@ -23,16 +25,19 @@ function Home() {
       console.log("Login first!")
       setLogStatus(false)
     }
-  }, [])
+  }, [search])
   console.log(tours)
 
   const getData = async () => {
     const header = { "Authorization": `Bearer ${sessionStorage.getItem('token')}` }
     // console.log(header)
-    const result = await allUserTours(header)
-    // console.log(result)
+    const result = await allUserTours(header, search)
+    const limitted = result.data.slice(0, 5)
+    console.log(limitted)
     if (result.status == 200) {
       setTours(result.data)
+      const allPhotos = result.data.flatMap(tour => tour.photo.slice(0, 1))
+      setPhotos(allPhotos)
     }
     else {
       console.log(result.response.data)
@@ -49,6 +54,8 @@ function Home() {
     }
   }
   console.log(toursHome)
+  console.log(photos)
+
   return (
     <>
       <Header status={true} />
@@ -122,7 +129,7 @@ function Home() {
 
       {/* THIRD SECTION */}
 
-      {/* <section>
+      <section>
         <Container>
           <Row>
             <Col lg='12'>
@@ -130,51 +137,59 @@ function Home() {
               <h2 className=''>Visit our customers tour gallery</h2>
             </Col>
           </Row>
-          <Row>
-            <div className=" d-flex">
-              <TourImages />
-              <TourImages />
-              <TourImages />
-
+          <div className='d-flex'>
+            {
+              photos.length > 0 ?
+                photos.map(item => (
+                  <div className='w-100 p-2'>
+                    <TourImages photo={item} />
+                  </div>
+                )) :
+                <h5>no images</h5>
+            }
+            <div className='galleryButton'  style={{marginTop:'150px'}}>
+              <Link to={'/gal'} className=' ms-3'>
+                <i class="fa-solid fa-circle-chevron-right fa-2xl" style={{ color: '#9fcdf9' }}></i>
+              </Link>
             </div>
-          </Row>
+          </div>
         </Container>
-      </section> */}
+      </section>
 
       {/* LAST SECTION */}
 
       <section className="w-100 p-5">
         <Row>
-            {
-              !logStatus ?
-                <div className='d-flex justify-content-between pt-2 ps-5 rounded-3' style={{ backgroundColor: "rgb(178 223 252)",margin:"" }}>
-                  <Col md='5'>
-                    <div>
-                      <h2>Register now to get useful Tour Package informations.</h2>
+          {
+            !logStatus ?
+              <div className='d-flex justify-content-between pt-2 ps-5 rounded-3' style={{ backgroundColor: "rgb(178 223 252)", margin: "" }}>
+                <Col md='5'>
+                  <div>
+                    <h2>Register now to get useful Tour Package informations.</h2>
 
-                      <div style={{ backgroundColor: "#ffffff" }} className='d-flex justify-content-between rounded-5 w-75 mt-3'>
-                        <input type="email" required placeholder="Enter your email" className='border-0 px-3' />
-                        <button className='btn btn-info '>
-                          <Link to={'/reg'} className='text-decoration-none text-light'>Register</Link>
-                        </button>
-                      </div>
+                    <div style={{ backgroundColor: "#ffffff" }} className='d-flex justify-content-between rounded-5 w-75 mt-3'>
+                      <input type="email" required placeholder="Enter your email" className='border-0 px-3' />
+                      <button className='btn btn-info '>
+                        <Link to={'/reg'} className='text-decoration-none text-light'>Register</Link>
+                      </button>
+                    </div>
 
-                      <p className='mt-3'>
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae in, asperiores esse maxime officia omnis enim. Obcaecati exercitationem perspiciatis veritatis voluptates eos vitae reiciendis, architecto totam qui placeat ipsa. Vel.
-                      </p>
-                    </div>
-                  </Col>
-                  <Col lg='5'>
-                    <div className="ms-5" style={{marginLeft:"300px"}}>
-                      <img src="https://cdni.iconscout.com/illustration/premium/thumb/free-registration-desk-1886554-1598085.png" height={"350px"} alt="" />
-                    </div>
-                  </Col>
-                </div>
-                :
-                <div className='m-5'>
-                  <img src="" alt="" />
-                  <h2 className='text-center mb-5'>You can access our Tour packages Now!</h2>
-                  <marquee behavior="" direction=''>
+                    <p className='mt-3'>
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Beatae in, asperiores esse maxime officia omnis enim. Obcaecati exercitationem perspiciatis veritatis voluptates eos vitae reiciendis, architecto totam qui placeat ipsa. Vel.
+                    </p>
+                  </div>
+                </Col>
+                <Col lg='5'>
+                  <div className="ms-5" style={{ marginLeft: "300px" }}>
+                    <img src="https://cdni.iconscout.com/illustration/premium/thumb/free-registration-desk-1886554-1598085.png" height={"350px"} alt="" />
+                  </div>
+                </Col>
+              </div>
+              :
+              <div className='m-5'>
+                <img src="" alt="" />
+                <h2 className='text-center mb-5'>You can access our Tour packages Now!</h2>
+                <marquee behavior="" direction=''>
                   <div className='d-flex'>
                     {
                       toursHome.length > 0 &&
@@ -187,17 +202,17 @@ function Home() {
                       ))
 
                     }
-                    
+
                   </div>
-                 
+
                 </marquee>
                 <div className='text-center mt-4'>
                   <Link to={'/tours'} className='text-decoration-none text-info'>Go for More Packages</Link>
                 </div>
-                </div>
-            }
-          </Row>
-          
+              </div>
+          }
+        </Row>
+
       </section>
     </>
   )

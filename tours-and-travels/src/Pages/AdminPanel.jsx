@@ -34,12 +34,10 @@ function AdminPanel() {
     useEffect(() => {
         console.log(tourData)
         if (tourData.image.type == "image/jpg" || tourData.image.type == "image/jpeg" || tourData.image.type == "image/png") {
-            console.log("Image has correct format")
             setImageStatus(false)
             setPreview(URL.createObjectURL(tourData.image))
         }
         else {
-            console.log("Invalid file format! Image should be jpg,png or jpeg")
             setImageStatus(true)
             setPreview("")
         }
@@ -49,7 +47,7 @@ function AdminPanel() {
         const { packageName, state, description, rate, maxGroupSize, image } = tourData
         if (!packageName || !state || !description || !rate || !maxGroupSize || !image) {
             toast.warning("Provide Complete Data!!")
-            console.log(packageName, state, description, rate, maxGroupSize, image)
+            // console.log(packageName, state, description, rate, maxGroupSize, image)
         }
         else {
             const formData = new FormData()
@@ -65,7 +63,7 @@ function AdminPanel() {
             }
             const result = await addTours(formData, reqHeader)
             if (result.status == 200) {
-                toast.success("Tour added successfully!")
+                toast.success(`${tourData.packageName} added successfully!`)
                 setTourData({
                     packageName: "", state: "", description: "", rate: "", maxGroupSize: "", image: ""
                 })
@@ -91,22 +89,21 @@ function AdminPanel() {
             console.log(result.response.data)
         }
     }
-    // console.log(tours)
 
     const handleDeleteTour = async (id) => {
+
         const header = {
             "Content-Type": "application/json",
         }
         const result = await deleteTour(id, header)
         if (result.status == 200) {
-            toast.success("Tour Package deleted successfully!!")
+            toast.error("One package has been deleted!!")
             getAllTours()
         }
         else {
             console.log(result)
             toast.error(result.response.data)
         }
-
     }
 
     return (
@@ -195,23 +192,16 @@ function AdminPanel() {
 
                                 }
                             </Row>
-
-
-
                         </div>
                     </div>
-
                     <hr />
 
                     <BookedInfo />
-
                     <hr />
 
                     <Users />
 
                 </div>
-
-
             </div>
         </>
     )

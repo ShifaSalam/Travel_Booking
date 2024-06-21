@@ -21,7 +21,6 @@ function Users() {
     }
     console.log(users)
 
-
     return (
         <>
             <div className='my-5'>
@@ -40,10 +39,9 @@ function Users() {
                                     </div>
                                 </Col>
                             )) :
-                            <h5>No Bookings!</h5>
+                            <h5>No Users!</h5>
                     }
                 </Row>
-
 
             </div>
         </>

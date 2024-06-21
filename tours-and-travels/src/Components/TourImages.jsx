@@ -6,9 +6,7 @@ import base_url from '../Services/base_url';
 
 
 function TourImages({ photo, tour }) {
-    const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedTour, setSelectedTour] = useState([]);
 
@@ -39,7 +37,7 @@ function TourImages({ photo, tour }) {
             <div>
                 <Modal
                     show={isModalOpen}
-                    onHide={handleClose}
+                    onHide={closeModal}
                     backdrop="static"
                     keyboard={false}
                 >

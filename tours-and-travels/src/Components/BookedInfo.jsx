@@ -27,13 +27,10 @@ function BookedInfo() {
         if (result.status == 200) {
             toast.error("Trip Cancelled!!")
             allClients()
-            console.log(result)
-
         }
         else {
             toast.error(result.response)
         }
-
     }
 
     return (
@@ -48,11 +45,15 @@ function BookedInfo() {
                             clients.map(item => (
                                 <Col md='5' className='d-flex justify-content-center'>
                                     <div className='w-100 bg-light shadow mt-5 p-3'>
-                                            <h3><b>Package Name :</b> {item.packageName}</h3>
+                                        <h3><b>Package Name :</b> {item.packageName}</h3>
                                         <h4><b>Client Name :</b> {item.fullName}</h4>
                                         <h4><b>Email id :</b> {item.email}</h4>
                                         <h4><b>Phone :</b> {item.phone}</h4>
-
+                                        <h4><b>Booked At :</b> {new Date(item.bookAt).toLocaleDateString('en-IN', {
+                                            month: 'long',
+                                            day: 'numeric',
+                                            year: 'numeric'
+                                        })}</h4>
                                         <div className='d-flex justify-content-between'>
                                             <h5><b>Guests :</b> {item.guestSize}</h5>
                                             <button className='btn pt-2' onClick={() => { handleDelete(item?._id) }}>
@@ -66,9 +67,7 @@ function BookedInfo() {
                     }
                 </Row>
 
-
             </div>
-
         </>
     )
 }

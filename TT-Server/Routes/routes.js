@@ -8,8 +8,6 @@ const jwtMiddle=require('../Middlewares/jwtMiddleware')
 const reviewController=require('../Controllers/reviewController')
 const bookingController=require('../Controllers/bookingController')
 
-// const app = express()
-// app.use(bodyParser.json())
 
 router.post('/register',userController.userRegister)
 router.post('/login',userController.userLogin)

@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { TokenAuthContext } from '../Context Api/AuthContext';
 
 
 function Header({ status }) {
+
+    const {authStatus,setAuthStatus}=useContext(TokenAuthContext)
+
     const navigate = useNavigate()
     const [token, setToken] = useState("")
 
@@ -18,7 +22,7 @@ function Header({ status }) {
         sessionStorage.removeItem('token')
         sessionStorage.removeItem('username')
         navigate('/')
-        console.log("logout")
+        setAuthStatus(false)
     }
     return (
         <>

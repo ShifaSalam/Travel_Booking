@@ -1,9 +1,10 @@
-
 import './App.css'
 import './bootstrap.min.css'
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
-import { Routes,Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
+import { useContext } from 'react'
+import { TokenAuthContext } from './Context Api/AuthContext'
 
 import Footer from './Components/Footer'
 import Home from './Pages/Home'
@@ -18,24 +19,24 @@ import Thankyou from './Pages/Thankyou'
 import Gallery from './Pages/Gallery'
 function App() {
 
+  const { authStatus, setAuthStatus } = useContext(TokenAuthContext)
 
   return (
     <>
-    <Routes>
-      <Route path='/' element={<Home/>}/>
-      <Route path='/tours' element={<Tours/>}/>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/reg' element={<Register/>}/>
-      <Route path='/admindash' element={<AdminPanel/>}/>
-      <Route path='/adminlogin' element={<AdminLogin/>}/>
-      <Route path='/tours' element={<Tours/>}/>
-      <Route path='/tourdet/:tid' element={<TourDetails/>}/>
-      <Route path='/bookingdet/:tid' element={<BookingDetails/>}/>
-      <Route path='/gal' element={<Gallery/>}/>
-      <Route path='/thank' element={<Thankyou/>}/>
-    </Routes>
-    <Footer/>
-    <ToastContainer/>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/reg' element={<Register />} />
+        <Route path='/admindash' element={<AdminPanel />} />
+        <Route path='/adminlogin' element={<AdminLogin />} />
+        <Route path='/tours' element={authStatus ? <Tours /> : <Login />} />
+        <Route path='/gal' element={authStatus ? <Gallery /> : <Login />} />
+        <Route path='/tourdet/:tid' element={authStatus ? <TourDetails /> : <Home />} />
+        <Route path='/bookingdet/:tid' element={authStatus ? <BookingDetails /> : <Home />} />
+        <Route path='/thank' element={authStatus ? <Thankyou /> : <Home />} />
+      </Routes>
+      <Footer />
+      <ToastContainer />
     </>
   )
 }

@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import {Container, Row, Col, Form, FormGroup,Button} from'react-bootstrap'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { userLogin } from '../Services/allApis';
-
 import {Link} from'react-router-dom'
+import { TokenAuthContext } from '../Context Api/AuthContext';
 
 function Login() {
+
+    const {authStatus,setAuthStatus}=useContext(TokenAuthContext)
+
      const navigate=useNavigate()
 
     const [data,setData]=useState({
@@ -28,6 +31,7 @@ function Login() {
                 sessionStorage.setItem("userDetails",JSON.stringify(result.data.userDetails))
                 toast.success("login successfull")
                 navigate('/')
+                setAuthStatus(true)
             }
             else{
                 toast.error(result.response.data)
@@ -38,7 +42,7 @@ function Login() {
     }
     return (
         <>
-            <section style={{backgroundImage:"url(https://t3.ftcdn.net/jpg/03/55/60/70/360_F_355607062_zYMS8jaz4SfoykpWz5oViRVKL32IabTP.jpg)", height:"100vh" }}>
+            <section style={{ backgroundImage: "url(https://classroomclipart.com/image/static7/preview2/photo-tropical-beach-with-aqua-blue-color-ocean-63680.jpg)", backgroundRepeat:'no-repeat',backgroundSize:"1700px 1000px", height: "100vh" }}>
             <Container>
                 <Row className='d-flex justify-content-center'>
                     <div className='w-75 d-flex justify-content-center' style={{marginTop:"140px"}}>

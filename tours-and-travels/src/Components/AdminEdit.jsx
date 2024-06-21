@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -11,10 +11,8 @@ import { editTourResponseContext } from '../Context Api/Contextapi';
 
 function AdminEdit({ tours }) {
 
-    const {editTourResponse,setEditTourResponse}=useContext(editTourResponseContext)
+    const { editTourResponse, setEditTourResponse } = useContext(editTourResponseContext)
 
-
-    // console.log(tours)
     const [preview, setPreview] = useState("")
     const [show, setShow] = useState(false);
 
@@ -52,7 +50,7 @@ function AdminEdit({ tours }) {
                 const reqHeader = {
                     "Content-Type": "multipart/form-data"
                 }
-                const result = await editTours(tourData.id,formData, reqHeader)
+                const result = await editTours(tourData.id, formData, reqHeader)
                 if (result.status == 200) {
                     toast.success(`Tour Package ${tourData.packageName} Updated Successfully!`)
                     setEditTourResponse(result)
@@ -69,9 +67,8 @@ function AdminEdit({ tours }) {
                 }
                 const result = await editTours(tourData.id, formData, reqHeader)
                 if (result.status == 200) {
-                    toast.success(`Tour Package ${tourData.packageName} Updated Successfully!`)
+                    toast.success(`${tourData.packageName} Package Updated Successfully!`)
                     setEditTourResponse(result)
-
                     handleClose()
                 }
                 else {
@@ -79,38 +76,34 @@ function AdminEdit({ tours }) {
                 }
             }
         }
-
-
     }
 
 
-return (
-    <>
-        <button className='btn me-3 mt-3' onClick={handleShow}>
-            <i className='fa-solid fa-pen-to-square fa-2xl'></i>
-        </button>
+    return (
+        <>
+            <button className='btn me-3 mt-3' onClick={handleShow}>
+                <i className='fa-solid fa-pen-to-square fa-2xl'></i>
+            </button>
 
-        <Modal
-            show={show}
-            onHide={handleClose}
-            backdrop="static"
-            keyboard={false}
-        >
-            <Modal.Header closeButton>
-                <Modal.Title> Add projects</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <div>
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title> Edit projects</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+
                     <Row>
                         <Col md='6'>
-                            <label>
-                                <input type="file" name='' onChange={(e) => { setTourData({ ...tourData, image: e.target.files[0] }) }} />
-                                <img className='img-fluid' src={preview ? preview : `${base_url}/uploads/${tours.image}`} style={{ height: '160px' }} alt="img" />
-
-
+                            <label className='h-75'>
+                                <input type="file" name='img' onChange={(e) => { setTourData({ ...tourData, image: e.target.files[0] }) }} />
+                                <img className='w-75 h-100' src={preview ? preview : `${base_url}/uploads/${tours.image}`} style={{ height: '160px' }} alt="img" />
                             </label>
-
                         </Col>
+
                         <Col>
                             <div>
                                 <FloatingLabel controlId="titleinp" label="Package Name" className="mb-3">
@@ -127,25 +120,22 @@ return (
                                 </FloatingLabel>
                             </div>
                         </Col>
+
                         <FloatingLabel controlId="githubinp" label="Description" className="mb-3">
                             <Form.Control type="text" value={tourData.description} placeholder="Description" onChange={(e) => { setTourData({ ...tourData, description: e.target.value }) }} />
                         </FloatingLabel>
-
-
                     </Row>
-                </div>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                <Button variant="primary" onClick={handleUpdate}>update</Button>
-            </Modal.Footer>
 
-
-        </Modal>
-    </>
-)
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleUpdate}>update</Button>
+                </Modal.Footer>
+            </Modal>
+        </>
+    )
 }
 
 export default AdminEdit

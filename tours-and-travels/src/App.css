@@ -5,3 +5,9 @@
     transition: 0.3s;
 }
 
+.galleryButton :hover{
+    transform: scale(1.5);
+}
+.galleryButton{
+    transition: 5s;
+}

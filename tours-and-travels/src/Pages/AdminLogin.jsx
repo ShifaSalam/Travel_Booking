@@ -20,7 +20,7 @@ function AdminLogin() {
         }
         else {
             toast.error("Enter Valid Information!")
-            alert("Are you sure you wan to go to admin panel?")
+            alert("Are you sure you want to go to admin panel?")
         }
     }
 
@@ -49,7 +49,6 @@ function AdminLogin() {
                                         <Form.Label>Password</Form.Label>
                                         <Form.Control type="password" name='pswd' onChange={handlepswd} placeholder="Enter password" />
                                     </Form.Group>
-                                    {/* <Link type='' className='btn w-100 mb-2' onClick={adminLogin}>Login</Link> */}
                                     <Button variant="info" className='btn w-100 mb-2' onClick={adminLogin} >Log in</Button>
                                 </Form>
                             </div>
