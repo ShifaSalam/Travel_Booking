@@ -10,7 +10,6 @@ const storage=multer.diskStorage({
     }
 })
 
-
 const multerconfig=multer({storage})
 
 module.exports=multerconfig

@@ -1,18 +1,19 @@
 const tours = require('../Models/tourModel')
 
-// To Create New Tours
+
+// To Create New Tour packages
 
 exports.createTour = async (req, res) => {
-    const { packageName, state, description, rate, maxGroupSize,reviews } = req.body
+    const { packageName, state, description, rate, maxGroupSize, reviews } = req.body
     const image = req.file.filename
-    // console.log( packageName, state, description, rate, maxGroupSize,reviews,image)
     try {
-        const newTour=new tours({
-            packageName, state, description, rate, maxGroupSize,reviews,image
+        const newTour = new tours({
+            packageName, state, description, rate, maxGroupSize, reviews, image
         })
         await newTour.save()
         res.status(200).json(newTour)
-    } catch (err) {
+    }
+    catch (err) {
         console.log(err)
         res.status(401).json(err)
     }
@@ -20,15 +21,13 @@ exports.createTour = async (req, res) => {
 
 
 // to get all tours
-
 exports.allTours = async (req, res) => {
-    const search=req.query.search
+    const search = req.query.search
     const { tid } = req.params
 
-    // console.log(search)
     try {
-        const query={
-            state:{$regex:search,$options:'i'}
+        const query = {
+            state: { $regex: search, $options: 'i' }
         }
         const result = await tours.find(query).populate('reviews')
 
@@ -36,11 +35,11 @@ exports.allTours = async (req, res) => {
             res.status(200).json(result)
         }
         else {
-            res.status(401).json("No Projects Available !")
+            res.status(401).json("No Tours Available !")
         }
     }
     catch (err) {
-        console.log("error",err)
+        console.log("error", err)
         res.status(406).json(err)
     }
 }
@@ -51,13 +50,12 @@ exports.specificTours = async (req, res) => {
     const { tid } = req.params
 
     try {
-       
-        const result = await tours.findById({_id:tid})
+        const result = await tours.findById({ _id: tid })
         if (result) {
             res.status(200).json(result)
         }
         else {
-            res.status(401).json("No Projects Available !")
+            res.status(401).json("No Tours Available !")
         }
     }
     catch (err) {
@@ -65,6 +63,7 @@ exports.specificTours = async (req, res) => {
         res.status(406).json(err)
     }
 }
+
 
 // home tours
 exports.homeTours = async (req, res) => {
@@ -83,35 +82,34 @@ exports.homeTours = async (req, res) => {
     }
 }
 
-// edit tour packages
 
+// edit tour packages
 exports.editTours = async (req, res) => {
-    const { packageName, state, description, rate, maxGroupSize,image } = req.body
+    const { packageName, state, description, rate, maxGroupSize, image } = req.body
     const userId = req.payload
     const tourImage = req.file ? req.file.filename : image
     const { tid } = req.params
     try {
         const updateTour = await tours.findByIdAndUpdate({ _id: tid },
-            { packageName, state, description, rate, maxGroupSize,image, userId }, { new: true })
-        await updateTour.save
+            { packageName, state, description, rate, maxGroupSize, image, userId }, { new: true })
+        updateTour.save
         res.status(200).json(updateTour)
     }
     catch (err) {
         console.log(err)
         res.status(406).json(err)
     }
-
 }
 
-// delete tour packages
 
+// delete tour packages
 exports.removeTours = async (req, res) => {
     const { tid } = req.params
     try {
         const result = await tours.findByIdAndDelete({ _id: tid })
         res.status(200).json(result)
     }
-    catch(err){
+    catch (err) {
         console.log(err)
         res.status(404).json(err)
     }
@@ -119,70 +117,39 @@ exports.removeTours = async (req, res) => {
 
 
 // For Adding Photos
-exports.addPhoto=async(req,res)=>{
-    // const userId=req.payload
-    // const userId = req.payload
+exports.addPhoto = async (req, res) => {
     const { tid } = req.params
-    // console.log(tid)
-    const {photo}=req.body
-    // const photoPath=req.file.path
-    // const photos=req.file?req.file.filename:photo
-    const photos= req.files.map(file => file.path)
-    try{
-        const newPhoto=await tours.findByIdAndUpdate({ _id: tid },{$push:{photo:{$each:photos}}},{new:true})
+    const { photo } = req.body
+    const photos = req.files.map(file => file.path)
+    try {
+        const newPhoto = await tours.findByIdAndUpdate({ _id: tid }, { $push: { photo: { $each: photos } } }, { new: true })
         await newPhoto.save()
         res.status(200).json(newPhoto)
         console.log(newPhoto)
     }
-    catch(err){
+    catch (err) {
         console.log(err)
         res.status(406).json(err)
     }
 }
 
-// to get added photos of each tours
-// exports.singlePhotos = async (req, res) => {
-//     const { tid } = req.params
-
-//     try {
-       
-//         const result = await tours.findById({_id:tid})
-//         // console.log(result)
-//         console.log(tid)
-//         if (result) {
-//             // to calculate the average review
-//             const photos = result.photo
-//             console.log(photos)
-//             res.status(200).json(photos)
-//         }
-//         else {
-//             res.status(401).json("No Projects Available !")
-//         }
-//     }
-//     catch (err) {
-//         console.log(err)
-//         res.status(406).json(err)
-//     }
-// }
-
 
 // all photos
 exports.allPhotos = async (req, res) => {
     const { tid } = req.params
-    const {photo,packageName}=req.body
+    const { photo, packageName } = req.body
     try {
-
         const result = await tours.find()
 
         if (result) {
             res.status(200).json(result)
         }
         else {
-            res.status(401).json("No Projects Available !")
+            res.status(401).json("No Photos Available !")
         }
     }
     catch (err) {
-        console.log("error",err)
+        console.log("error", err)
         res.status(406).json(err)
     }
 }

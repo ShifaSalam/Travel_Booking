@@ -69,7 +69,6 @@ export const homeTours=async(header)=>{
 
 // to get single tour
 export const SingleTour=async(tid,header)=>{
-    // console.log(tid,'single')
     return await commonApi("GET",`${base_url}/single-tour/${tid}`,"",header)
 }
 
@@ -91,13 +90,6 @@ export const getReview=async(tid,header)=>{
 export const addPhoto=async(tid,data,header)=>{
     return await commonApi("POST",`${base_url}/addphoto/${tid}`,data,header)
 }
-
-// Get Single tour photos
-// export const getPhoto=async(tid,header)=>{
-//     return await commonApi("GET",`${base_url}/singletour-photos/${tid}/reviews`,"",header)
-// }
-
-
 
 // __BOOKING__
 

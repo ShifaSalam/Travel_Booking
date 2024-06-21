@@ -1,11 +1,8 @@
-
 const users=require('../Models/userModel')
 const jwt=require('jsonwebtoken')
 
-
 exports.userRegister=async(req,res)=>{
     const {username,password,email}=req.body
-    console.log("Inside Register Function!!")
     try{
         const existingUser=await users.findOne({email})
         if(existingUser){
@@ -30,12 +27,11 @@ exports.userLogin= async(req,res)=>{
     console.log(email,password)
     try{
         const existingUser= await users.findOne({email,password})
-        console.log(existingUser)
         if(existingUser){
             const token=jwt.sign({email:existingUser.email,username:existingUser.username,userId:existingUser._id},process.env.secret_key)
             const rest={token,user:existingUser.username,userDetails:existingUser}
-            console.log(rest)
-            console.log(token)
+            // console.log(rest)
+            // console.log(token)
             res.status(200).json(rest)
         }
         else{
@@ -51,7 +47,6 @@ exports.userLogin= async(req,res)=>{
 exports.allUsers = async (req, res) => {
 
     try {
-
         const result = await users.find()
 
         if (result) {
