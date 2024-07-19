@@ -23,7 +23,7 @@ function Users() {
 
     return (
         <>
-            <div className='my-5'>
+            <div className='my-5' >
                 <h3 className='text-center'><b>Users</b></h3>
 
                 <Row>

@@ -12,6 +12,7 @@ import { addTours, allTours, deleteTour } from '../Services/allApis';
 import { addTourResponseContext } from '../Context Api/Contextapi';
 import { editTourResponseContext } from '../Context Api/Contextapi';
 import Users from '../Components/Users';
+import AdminHeader from '../Components/AdminHeader';
 
 function AdminPanel() {
     const { addTourResponse, setAddTourResponse } = useContext(addTourResponseContext)
@@ -108,6 +109,7 @@ function AdminPanel() {
 
     return (
         <>
+            <AdminHeader />
             <div className='m-5'>
                 <div>
                     <div className='m-5'>
@@ -168,7 +170,7 @@ function AdminPanel() {
                         </Modal.Footer>
                     </Modal>
 
-                    <div className='mt-5'>
+                    <div className='mt-5' id='trips'>
                         <h3 className='text-center'>All available Tour Packages</h3>
                         <div className='border border-3 p-3 d-flex mb-5'>
 
@@ -196,10 +198,14 @@ function AdminPanel() {
                     </div>
                     <hr />
 
-                    <BookedInfo />
+                    <div id='bookings'>
+                        <BookedInfo />
+                    </div>
                     <hr />
 
-                    <Users />
+                    <div id='users'>
+                        <Users />
+                    </div>
 
                 </div>
             </div>

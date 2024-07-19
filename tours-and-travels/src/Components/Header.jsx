@@ -21,6 +21,7 @@ function Header() {
         sessionStorage.removeItem('username')
         navigate('/')
         setAuthStatus(false)
+        window.location.reload();
     }
 
     return (
@@ -40,10 +41,16 @@ function Header() {
 
                         {
                             token ?
-                                <button className='btn btn-outline-danger' onClick={handleLogout}>
-                                    <i className="fa-solid fa-right-from-bracket" />
-                                    Logout
-                                </button>
+                                <div>
+                                    <button className='btn btn-outline-danger' onClick={handleLogout}>
+                                        <i className="fa-solid fa-right-from-bracket" />
+                                        Logout
+                                    </button>
+                                    <Link className='ms-5 ps-5'>
+                                    <i class="fa-regular fa-lg fa-user" style={{color:'#74C0FC'}}></i>
+                                    </Link>
+                                </div>
+
                                 :
                                 <div>
                                     <Link className='btn btn-outline-info me-3' to={'/login'}>Log In</Link>

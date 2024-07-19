@@ -68,7 +68,7 @@ exports.specificTours = async (req, res) => {
 // home tours
 exports.homeTours = async (req, res) => {
     try {
-        const result = await tours.find().limit(3).populate('reviews')
+        const result = await tours.find().limit(5).populate('reviews')
         if (result) {
             res.status(200).json(result)
         }

@@ -17,12 +17,14 @@ import TourDetails from './Pages/TourDetails'
 import BookingDetails from './Pages/BookingDetails'
 import Thankyou from './Pages/Thankyou'
 import Gallery from './Pages/Gallery'
+import ScrollToTop from './Components/ScrollToTop'
 function App() {
 
   const { authStatus, setAuthStatus } = useContext(TokenAuthContext)
 
   return (
     <>
+    <ScrollToTop/>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />

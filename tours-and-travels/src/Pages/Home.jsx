@@ -185,23 +185,27 @@ function Home() {
                 <div className='m-5'>
                   <img src="" alt="" />
                   <h2 className='text-center mb-5'>You can access our Tour packages Now!</h2>
-                  <marquee behavior="" direction=''>
-                    <div className='d-flex'>
-                      {
-                        toursHome.length > 0 &&
-                        toursHome.map(item => (
-                          <div>
-                            <div className='mx-4'>
-                              <TourCard tours={item} />
-                            </div>
+
+                  <div id="carouselExampleControls" className="carousel slide carousel-fade w-50 m-auto" data-ride="carousel">
+                    <div className="carousel-inner">
+                      {toursHome.length > 0 &&
+                        toursHome.map((item, index) => (
+                          <div
+                            key={index}
+                            className={`carousel-item ${index === 0 ? "active" : ""}`}
+                          >
+                            <TourCard tours={item} />
                           </div>
-                        ))
-
-                      }
-
+                        ))}
                     </div>
+                    <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                      <span className="carousel-control-prev-icon btn btn-outline-info" aria-hidden="true"></span>
+                    </a>
+                    <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                      <span className="carousel-control-next-icon btn btn-outline-info" aria-hidden="true"></span>
+                    </a>
+                  </div>
 
-                  </marquee>
                   <div className='text-center mt-4'>
                     <Link to={'/tours'} className='text-decoration-none text-info'>Go for More Packages</Link>
                   </div>
@@ -210,7 +214,7 @@ function Home() {
           }
         </Row>
 
-      </section>
+      </section >
     </>
   )
 }
