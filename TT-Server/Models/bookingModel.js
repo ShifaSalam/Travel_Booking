@@ -29,6 +29,10 @@ const bookingSchema = new mongoose.Schema(
     bookAt:{
         type: Date,
         required: true,
+    },
+    totalAmount:{
+      type:Number,
+      required:true
     }
   },
   { timestamps: true }

@@ -54,8 +54,9 @@ function BookedInfo() {
                                             day: 'numeric',
                                             year: 'numeric'
                                         })}</h4>
+                                        <h5><b>Guests :</b> {item.guestSize}</h5>
                                         <div className='d-flex justify-content-between'>
-                                            <h5><b>Guests :</b> {item.guestSize}</h5>
+                                            <h5><b>Total Amount :</b> <i class="fa-solid fa-sm fa-indian-rupee-sign me-1"></i>{item.totalAmount}</h5>
                                             <button className='btn pt-2' onClick={() => { handleDelete(item?._id) }}>
                                                 <i className="fa-solid fa-trash-can fa-xl" style={{ color: "#80000d" }}></i>
                                             </button>

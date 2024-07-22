@@ -1,13 +1,19 @@
-.gallery:hover{
-   transform: scale(1.1);
+.gallery:hover {
+    transform: scale(1.1);
 }
-.gallery{
+
+.gallery {
     transition: 0.3s;
 }
 
-.galleryButton :hover{
+.galleryButton :hover {
     transform: scale(1.5);
 }
-.galleryButton{
+
+.galleryButton {
     transition: 5s;
+}
+
+.star :hover {
+    transform: scale(1.9);
 }

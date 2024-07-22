@@ -110,24 +110,30 @@ function TourDetails() {
                 </div>
 
                 <div className="border p-3 mt-4 m-auto w-50">
-                    <h4>Reviews ({allReviews.length}) </h4>
+                    <div className='d-flex justify-content-between'>
+                        <h4>Reviews ({allReviews.length}) </h4>
+                        <div className='d-flex mb-5'>
+                            (<h5 className='me-1'>{averageRating}</h5>
+                            <span style={{ color: '#ffc800' }}><i className="fa-solid fa-star" ></i></span> )
+                        </div>
+                    </div>
                     <AddPhoto setAddStatus={setAddStatus} />
 
                     <div >
                         <div className='d-flex align-items-center gap-3 my-3 rating__group'>
-                            <span style={{ color: '#ffc800' }} onClick={e => setReviews({ ...reviews, rating: 1 })}>
+                            <span className='star' style={{ color: '#ffc800' }} onClick={e => setReviews({ ...reviews, rating: 1 })}>
                                 1 <i className="fa-solid fa-star fa-2xs" ></i>
                             </span>
-                            <span style={{ color: '#ffc800' }} onClick={e => setReviews({ ...reviews, rating: 2 })}>
+                            <span className='star' style={{ color: '#ffc800' }} onClick={e => setReviews({ ...reviews, rating: 2 })}>
                                 2 <i className="fa-solid fa-star fa-2xs" ></i>
                             </span>
-                            <span style={{ color: '#ffc800' }} onClick={e => setReviews({ ...reviews, rating: 3 })}>
+                            <span className='star' style={{ color: '#ffc800' }} onClick={e => setReviews({ ...reviews, rating: 3 })}>
                                 3 <i className="fa-solid fa-star fa-2xs" ></i>
                             </span>
-                            <span style={{ color: '#ffc800' }} onClick={e => setReviews({ ...reviews, rating: 4 })}>
+                            <span className='star' style={{ color: '#ffc800' }} onClick={e => setReviews({ ...reviews, rating: 4 })}>
                                 4 <i className="fa-solid fa-star fa-2xs"></i>
                             </span>
-                            <span style={{ color: '#ffc800' }} onClick={e => setReviews({ ...reviews, rating: 5 })}>
+                            <span className='star' style={{ color: '#ffc800' }} onClick={e => setReviews({ ...reviews, rating: 5 })}>
                                 5 <i className="fa-solid fa-star fa-2xs"></i>
                             </span>
                         </div>
@@ -173,18 +179,18 @@ function TourDetails() {
                     </ListGroup>
                 </div>
                 {
-                    photos.length>0 &&
+                    photos.length > 0 &&
                     <div className='m-5'>
                         <h2>Here is a glimpse of our Happy Travelers' Gallery...</h2>
                         <Row className='m-5'>
                             {
-                                
-                                    photos.map(item => (
-                                        <Col md='3' className='my-2'>
-                                            <img src={item && `${base_url}/${item}`} width={'100%'} alt="tour-img" height={'300px'} />
-                                        </Col>
-                                    )) 
-                                    
+
+                                photos.map(item => (
+                                    <Col md='3' className='my-2'>
+                                        <img src={item && `${base_url}/${item}`} width={'100%'} alt="tour-img" height={'300px'} />
+                                    </Col>
+                                ))
+
                             }
                         </Row>
                     </div>

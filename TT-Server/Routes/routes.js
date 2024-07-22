@@ -37,6 +37,7 @@ router.post('/addphoto/:tid',multerconfig.array('photo',15),tourController.addPh
 router.get('/allphotos',tourController.allPhotos)
 
 router.post('/addbooking',bookingController.createBooking)
+router.get('/userBooking',bookingController.userBookings)
 
 
 module.exports=router

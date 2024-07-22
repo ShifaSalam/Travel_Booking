@@ -79,7 +79,13 @@ function BookingDetails() {
             </section>
             {/*TOUR REVIEW START */}
             <div className="border mt-5 p-3 m-auto mx-5">
-                <h4>Reviews ({allReviews?.length}) </h4>
+                <div className='d-flex justify-content-between'>
+                    <h4>Reviews ({allReviews?.length}) </h4>
+                    <div className='d-flex mb-5'>
+                        (<h5 className='me-1'>{averageRating}</h5>
+                        <span style={{ color: '#ffc800' }}><i className="fa-solid fa-star" ></i></span> )
+                    </div>
+                </div>
 
                 <Form >
                     <div className='d-flex gap-3 mb-3'>
@@ -122,13 +128,13 @@ function BookingDetails() {
                                                             year: 'numeric'
                                                         })}]</p>
                                                         <span className='ms-5'>
-                                                           ( {item.rating} <i className="fa-solid fa-star fa-2xs" style={{ color: '#ffc800' }}></i>)
+                                                            ( {item.rating} <i className="fa-solid fa-star fa-2xs" style={{ color: '#ffc800' }}></i>)
                                                         </span>
                                                     </div>
                                                 </div>
 
                                             </div>
-                                                <h5 className='text-center mt-3'><b>{item.reviewText}</b></h5>
+                                            <h5 className='text-center mt-3'><b>{item.reviewText}</b></h5>
 
                                         </div>
                                     </div>

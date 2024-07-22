@@ -97,6 +97,10 @@ export const addBooking=async(data)=>{
     return await commonApi("POST",`${base_url}/addbooking`,data,"")
 }
 
+export const userBookings=async()=>{
+    return await commonApi("GET",`${base_url}/userBooking`,"")
+}
+
 
 
 
